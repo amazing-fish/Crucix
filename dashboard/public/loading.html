@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CRUCIX — Initializing</title>
+<title>CRUCIX — 初始化中</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -47,7 +47,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 
   <div id="status">
     <span class="blink"></span>
-    <span id="statusText">COLLECTING DATA...</span>
+    <span id="statusText">正在采集数据...</span>
   </div>
 
   <div id="countdown">
@@ -60,13 +60,13 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 const SWEEP_ESTIMATE_S = 50; // estimated sweep duration in seconds
 
 const lines = [
-  'CRUCIX INTELLIGENCE ENGINE v2.0.0',
-  'INITIATING FIRST SWEEP...',
-  '├── CONNECTING 25 OSINT SOURCES',
+  'CRUCIX 情报引擎 v2.0.0',
+  '正在启动首次扫描...',
+  '├── 连接 25 个 OSINT 数据源',
   '├── GDELT · OPENSKY · FIRMS · MARITIME · SAFECAST',
   '├── FRED · BLS · EIA · TREASURY · GSCPI',
   '└── TELEGRAM · WHO · OFAC · ACLED · REDDIT · BLUESKY',
-  '<span class="ok">AWAITING SWEEP COMPLETION...</span>',
+  '<span class="ok">等待扫描完成...</span>',
 ];
 
 const container = document.getElementById('bootLines');
@@ -80,11 +80,11 @@ lines.forEach((text, i) => {
 });
 
 const statusMessages = [
-  'COLLECTING DATA...',
-  'PROCESSING SOURCES...',
-  'SYNTHESIZING SIGNALS...',
-  'CORRELATING FEEDS...',
-  'AWAITING COMPLETION...',
+  '正在采集数据...',
+  '正在处理数据源...',
+  '正在合成信号...',
+  '正在关联信息流...',
+  '等待完成...',
 ];
 let statusIdx = 0;
 const statusText = document.getElementById('statusText');
@@ -103,13 +103,13 @@ function startCountdown(elapsedSeconds) {
 
   function tick() {
     if (remaining <= 0) {
-      etaText.textContent = 'FINALIZING...';
+      etaText.textContent = '即将完成...';
       barFill.style.width = '99%';
       return;
     }
     const pct = Math.min(99, ((SWEEP_ESTIMATE_S - remaining) / SWEEP_ESTIMATE_S) * 100);
     barFill.style.width = pct + '%';
-    etaText.innerHTML = `EST. READY IN <span class="eta">~${remaining}s</span>`;
+    etaText.innerHTML = `预计 <span class="eta">~${remaining}秒</span> 后就绪`;
     remaining--;
   }
 
@@ -140,7 +140,7 @@ es.onmessage = (e) => {
       barFill.style.transition = 'width 0.4s ease';
       barFill.style.width = '100%';
       etaText.textContent = '';
-      statusText.textContent = 'TERMINAL READY — LOADING DASHBOARD';
+      statusText.textContent = '终端就绪 — 正在加载仪表盘';
       setTimeout(() => location.replace('/'), 800);
     }
   } catch {}
