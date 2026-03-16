@@ -277,9 +277,9 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
         <div class="map-legend" id="mapLegend"></div>
         <div class="map-hint" id="mapHint">滚轮缩放 · 拖拽平移</div>
         <div class="map-controls">
-          <button class="map-ctrl-btn" onclick="mapZoom(1.5)" title="Zoom in">+</button>
-          <button class="map-ctrl-btn" onclick="mapZoom(0.67)" title="Zoom out">&minus;</button>
-          <button class="map-ctrl-btn map-toggle" id="flightToggle" onclick="toggleFlights()" title="Toggle flight routes">&#9992;</button>
+          <button class="map-ctrl-btn" onclick="mapZoom(1.5)" title="放大">+</button>
+          <button class="map-ctrl-btn" onclick="mapZoom(0.67)" title="缩小">&minus;</button>
+          <button class="map-ctrl-btn map-toggle" id="flightToggle" onclick="toggleFlights()" title="切换航线">&#9992;</button>
         </div>
         <button class="proj-toggle" id="projToggle" onclick="toggleMapMode()">球形模式</button>
         <div class="map-popup" id="mapPopup"><button class="pp-close" onclick="closePopup()">&times;</button><div class="pp-head"></div><div class="pp-text"></div><div class="pp-meta"></div></div>
@@ -310,7 +310,7 @@ const regionPOV = {
 function renderTopbar(){
   const ts = new Date(D.meta.timestamp);
   const d = ts.toLocaleDateString('zh-CN',{month:'short',day:'numeric',year:'numeric'}).toUpperCase();
-  const t = ts.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true});
+  const t = ts.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',hour12:false});
   document.getElementById('topbar').innerHTML=`
     <div class="top-left">
       <span class="brand">CRUCIX 监控</span>
@@ -351,7 +351,7 @@ function renderLeftRail(){
     {name:'卫星',count:D.space?.militarySats||0,dot:'space',sub:`${D.space?.totalNewObjects||0} 新增 (30天)`}
   ];
   const allNormal=D.nuke.every(s=>!s.anom);
-  const nukeHtml=D.nuke.map(s=>`<div class="site-row"><span>${s.site}</span><span class="site-val">${s.n>0?(s.cpm?.toFixed(1)||'--')+' CPM':'No data'}</span></div>`).join('');
+  const nukeHtml=D.nuke.map(s=>`<div class="site-row"><span>${s.site}</span><span class="site-val">${s.n>0?(s.cpm?.toFixed(1)||'--')+' CPM':'无数据'}</span></div>`).join('');
   const vix=D.fred.find(f=>f.id==='VIXCLS');
   const hy=D.fred.find(f=>f.id==='BAMLH0A0HYM2');
   const usd=D.fred.find(f=>f.id==='DTWEXBGS');
@@ -969,7 +969,7 @@ function renderLower(){
       <span class="idea-type ${(idea.type||'').toLowerCase()}">${(idea.type||'').toUpperCase()}</span>
       ${idea.ticker ? `<span class="idea-horizon">${idea.ticker}</span>` : ''}
       ${idea.horizon ? `<span class="idea-horizon">${idea.horizon}</span>` : ''}
-      <span class="idea-conf">${idea.confidence} confidence</span>
+      <span class="idea-conf">${idea.confidence} 置信度</span>
       <div class="idea-title">${idea.title}</div>
       <div class="idea-text">${idea.text||idea.rationale||''}</div>
       ${idea.risk ? `<div class="idea-text" style="color:var(--warn);margin-top:3px">风险: ${idea.risk}</div>` : ''}
@@ -1100,7 +1100,7 @@ function safeExternalUrl(raw){try{const u=new URL(raw,location.href);return u.pr
 
 // === BOOT SEQUENCE ===
 function runBoot(){
-  const acledStatus = D.acled?.totalEvents > 0 ? `<span class="ok">${D.acled.totalEvents} EVENTS</span>` : '<span style="color:var(--warn)">DEGRADED</span>';
+  const acledStatus = D.acled?.totalEvents > 0 ? `<span class="ok">${D.acled.totalEvents} 事件</span>` : '<span style="color:var(--warn)">数据降级</span>';
   const lines=[
     {text:'正在初始化 CRUCIX 引擎 v2.1.0',delay:0},
     {text:`正在连接 ${D.meta.sourcesQueried} 个 OSINT 数据源...`,delay:400},
