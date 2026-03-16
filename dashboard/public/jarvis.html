@@ -1055,7 +1055,7 @@ function renderRight(){
 
   // OSINT TICKER — Telegram + WHO as flowing cards
   const allPosts=[...D.tg.urgent,...D.tg.topPosts].sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
-  const whoItems=D.who.slice(0,4).map(w=>({channel:'WHO ALERT',text:w.title,date:w.date,isWho:true}));
+  const whoItems=D.who.slice(0,4).map(w=>({channel:'WHO 警报',text:w.title,date:w.date,isWho:true}));
   const osintItems=[...allPosts.slice(0,15),...whoItems];
   const osintCards=osintItems.map(p=>{
     const isU=p.urgentFlags&&p.urgentFlags.length>0;
